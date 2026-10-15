@@ -107,17 +107,17 @@ Sistem ini menggunakan Google Visualization API (tq) yang di-generate oleh AI un
 **Variasi 1: Prompt Terstruktur**
 Menyebutkan Nomor KA dan Tanggal secara spesifik.
 <br>
-![Req Data v1](Documentation/5.%20Req%20Data%20Mode%20v1%20prompt.jpg)
+![Req Data v1](Documentation/5.%20Req%20Data%20Mode%20v1%20prompt.png)
 
 **Variasi 2: Prompt Kontekstual/Santai**
 Menggunakan bahasa sehari-hari seperti *"Saya mau kamu berikan data di bulan Juni tanggal 1 2026, tapi KA K125104 ya.."*. AI cukup cerdas untuk mengekstrak parameter tersebut.
 <br>
-![Req Data v2](Documentation/6.%20Req%20Data%20Mode%20v2%20prompt.jpg)
+![Req Data v2](Documentation/6.%20Req%20Data%20Mode%20v2%20prompt.png)
 
 **Variasi 3: Prompt Singkat (Keyword)**
 Cukup mengetikkan kata kunci pencarian yang dipisahkan koma, seperti *"Data K1125104, 30 Juli 2026, OPEN, Aris"*.
 <br>
-![Req Data v3](Documentation/7.%20Req%20Data%20Mode%20v3%20prompt.jpg)
+![Req Data v3](Documentation/7.%20Req%20Data%20Mode%20v3%20prompt.png)
 
 ### 6. Prompt yang Tidak Direkomendasikan
 Hindari memberikan *prompt* yang meminta AI untuk menghitung seluruh data, melakukan estimasi kompleks yang tidak didukung data, atau meminta rincian dari pencarian yang terlalu luas (misal hanya menyebutkan "Bogie"). Hal ini dapat menyebabkan beban *runtime* yang sangat lama (Time Out) atau server sibuk karena ukuran data balasan yang terlalu besar.
