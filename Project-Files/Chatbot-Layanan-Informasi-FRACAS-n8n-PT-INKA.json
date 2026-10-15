@@ -1,0 +1,2140 @@
+{
+  "name": "Gathering_Information_FRACAS",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "@devlikeapro/n8n-nodes-waha.wahaTrigger",
+      "typeVersion": 202502,
+      "position": [
+        -176,
+        288
+      ],
+      "id": "eb42414d-1a75-499e-91c9-e134034c4822",
+      "name": "WAHA Trigger",
+      "webhookId": "f70a7405-5a02-4637-bd2c-9c650387e7b7"
+    },
+    {
+      "parameters": {
+        "amount": "={{ Math.floor(Math.random() * (15 - 5 + 1)) + 5 }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2624,
+        -144
+      ],
+      "id": "f25e2258-35c7-42a4-b964-4383ba7417b2",
+      "name": "Wait",
+      "webhookId": "14a3f621-5a83-4ecb-aa28-494223b3cf0e"
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Stop Typing",
+        "session": "={{ $('Edit Fields').item.json.session }}",
+        "chatId": "={{ $('Edit Fields').item.json.payload.from }}",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        2416,
+        -144
+      ],
+      "id": "eb62f9a6-2f87-4ea2-8a55-bf0f52d07528",
+      "name": "Stop Typing",
+      "credentials": {
+        "wahaApi": {
+          "id": "gKvk3gzaqlaZlIQJ",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $('Edit Fields').first().json.session }}",
+        "chatId": "={{ $('Edit Fields').first().json.payload.from }}",
+        "text": "={{ $('General AI').item.json.output }}",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        2336,
+        976
+      ],
+      "id": "872640f7-398e-4026-87f8-335716bc9368",
+      "name": "Send a text message",
+      "credentials": {
+        "wahaApi": {
+          "id": "gKvk3gzaqlaZlIQJ",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Stop Typing",
+        "session": "={{ $('Edit Fields').first().json.session\n}}",
+        "chatId": "={{ $('Edit Fields').first().json.payload.from }}",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        1952,
+        976
+      ],
+      "id": "72d398e4-84c8-40f2-b610-30389a848a6a",
+      "name": "Stop Typing2",
+      "credentials": {
+        "wahaApi": {
+          "id": "gKvk3gzaqlaZlIQJ",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": "={{ Math.floor(Math.random() * (15 - 5 + 1)) + 5 }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2144,
+        976
+      ],
+      "id": "a7f6d844-8610-4bbe-9625-cfda82e04d27",
+      "name": "Wait2",
+      "webhookId": "14a3f621-5a83-4ecb-aa28-494223b3cf0e"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "queryString": "=name contains '{{ $json.output.replace('###FILE_MODE###', '').trim() }}' and trashed = false",
+        "returnAll": true,
+        "filter": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1616,
+        -48
+      ],
+      "id": "ac8e0547-c347-427c-9544-7b0f60912a84",
+      "name": "Search files and folders",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "pgkyd6wFdgLjqzYm",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        176,
+        304
+      ],
+      "id": "cfa0ab08-ef0f-4b18-a09b-e6f080f18afe",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2208,
+        -144
+      ],
+      "id": "9efa64c5-253c-45df-98f5-eede2b9d1e1c",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "pgkyd6wFdgLjqzYm",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "696ce76d-861f-4c45-8241-75297d53a40c",
+              "leftValue": "={{ $('Klasifikasi AI').item.json.output }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1792,
+        -48
+      ],
+      "id": "b5891402-8916-4fcf-aba7-32aade07e738",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $('Edit Fields').first().json.session }}",
+        "chatId": "={{ $('Edit Fields').first().json.payload.from }}",
+        "text": "File tidak ditemukan~",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        2000,
+        48
+      ],
+      "id": "24b8d45a-8b1f-4503-b13a-0359f73a1e47",
+      "name": "Send a text message4",
+      "credentials": {
+        "wahaApi": {
+          "id": "gKvk3gzaqlaZlIQJ",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $('Edit Fields').first().json.session }}",
+        "chatId": "={{ $('WAHA Trigger').first().json.payload.from }}",
+        "text": "=📂 *Dokumen Ditemukan!*\n\n📄 Nama: {{ $('Search files and folders').first().json.name }}\n🔗 Link Preview: https://drive.google.com/file/d/{{ $('Search files and folders').first().json.id }}/view\n\n_Sedang mengunduh file asli untuk Anda..._",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        2000,
+        -144
+      ],
+      "id": "3b04e826-88eb-4704-93eb-c46e10f16dcd",
+      "name": "Send a text message5",
+      "credentials": {
+        "wahaApi": {
+          "id": "gKvk3gzaqlaZlIQJ",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send File",
+        "session": "={{ $('WAHA Trigger').first().json.session }}",
+        "chatId": "={{ $('WAHA Trigger').first().json.payload.from }}",
+        "file": "={{ 'data' }}",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        2832,
+        -144
+      ],
+      "id": "f0b1fe95-0b81-49fd-b82b-e9c30590fa32",
+      "name": "Send a file",
+      "credentials": {
+        "wahaApi": {
+          "id": "gKvk3gzaqlaZlIQJ",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Phase 1 : Number Validation From Spreadsheet",
+        "height": 288,
+        "width": 1440,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        80,
+        224
+      ],
+      "typeVersion": 1,
+      "id": "e5c392a1-c979-48d2-9bbe-86c1f6d33f88",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Phase 2 : Clasification Route",
+        "height": 400,
+        "width": 1440,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        80,
+        864
+      ],
+      "typeVersion": 1,
+      "id": "7f1e19cd-1c61-4d68-b2e7-274ec8ed6b73",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "9244f303-c1c9-4543-a3fa-5e644c4237d6",
+                    "leftValue": "={{ $json.output }}",
+                    "rightValue": "###REQ_DATA###",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "fb0ad9a2-76dd-4e1b-b367-b6c83ee54e43",
+                    "leftValue": "={{ $json.output }}",
+                    "rightValue": "###INFO_MODE###",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "4a86fb9c-1b87-4a60-84e1-5bc487273a68",
+                    "leftValue": "={{ $json.output }}",
+                    "rightValue": "###DOCS_MODE###",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        1168,
+        928
+      ],
+      "id": "176aa992-e89a-4dfe-bef2-043afaeba01d",
+      "name": "Route Path"
+    },
+    {
+      "parameters": {
+        "content": "## Phase 3 : (File Mode Route) This route will be used to send a Link from Gdrive, Send a File ",
+        "height": 400,
+        "width": 2272,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1552,
+        -208
+      ],
+      "typeVersion": 1,
+      "id": "e1b83f60-300e-4e6e-b40a-ebb9cce8838d",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Phase 3 : (Req Data Mode Route) This route will be used to send a Report FRACAS Data ",
+        "height": 608,
+        "width": 2272,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1552,
+        224
+      ],
+      "typeVersion": 1,
+      "id": "28e1c718-d0bc-43ab-ad69-d7104c7a3b0d",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## Phase 3 : (Information Mode Route) This route will be used to send a Information about Enterprise (Knowledge from Supabase vector)",
+        "height": 528,
+        "width": 2272,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1552,
+        864
+      ],
+      "typeVersion": 1,
+      "id": "c749cd21-03ff-473e-8c51-3e01dd41da2c",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('WAHA Trigger').first().json.payload.body }}",
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "Kamu adalah Router Logika untuk sistem FRACAS. Tugasmu HANYA mengklasifikasikan pesan user ke dalam 2 kategori. JANGAN MENJAWAB PERTANYAAN USER.\n\nKategorikan input menjadi salah satu format berikut:\n\n1. JIKA user meminta data spesifik dari laporan/tabel (Harga, Tanggal, Jumlah, List Kerusakan):\n   Output: ###REQ_DATA### [Pertanyaan asli user]\n\n2. JIKA user bertanya definisi, prosedur, pengetahuan umum (Knowledge Base), atau sekadar menyapa:\n   Output: ###INFO_MODE### [Pertanyaan asli user]\n\n3. JIKA user bertanya isi dokumen, link dokumen, penanggung jawab, nama dokumen atau bahkan kode:\n   Output: ###DOCS_MODE### [Pertanyaan asli user]\n\nContoh:\nUser: \"Cari kerusakan tanggal 12 Jan\" -> Output: ###REQ_DATA### Laporan kerusakan tanggal 12 Januari\nUser: \"Apa definisi MTTR?\" -> Output: ###INFO_MODE### Apa definisi MTTR?\nUser: \"Link Dokumen PM-06.01\"  ->  Output: ###DOCS_MODE### Dokumen PM-06.01"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        752,
+        944
+      ],
+      "id": "ef39acaa-9196-4afe-9745-df48661ab32b",
+      "name": "Klasifikasi AI"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Klasifikasi AI').item.json.output }}",
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "Kamu adalah Asisten Cerdas untuk sistem FRACAS PT. INKA.\nTugas utamamu adalah mengidentifikasi maksud (intent) dari pertanyaan pengguna.\n\nATURAN OUTPUT (WAJIB)\n\n- Jangan pernah menampilkan proses berpikir, reasoning, chain of thought, atau analisis internal.\n- Jangan pernah menghasilkan tag <think>, </think>, ataupun konten di dalamnya.\n- Berikan hanya jawaban akhir yang akan dibaca pengguna.\n- Jika melakukan penalaran, lakukan secara internal dan jangan ditampilkan.\n\nAda dua jenis pertanyaan yang akan kamu terima:\n1. **PERMINTAAN DATA**: Jika pengguna meminta untuk menampilkan, mencari, melihat, atau menghitung data laporan spesifik (Contoh: \"Tampilkan laporan kerusakan mesin bubut\", \"Berapa biaya perbaikan seal?\", \"Cari data tanggal 12 Januari\").\n2. **PERTANYAAN UMUM**: Jika pengguna hanya menyapa, bertanya definisi, atau meminta penjelasan konsep tanpa meminta data spesifik (Contoh: \"Halo\", \"Apa itu FRACAS?\", \"Jelaskan tentang MTTR\").\n\n---\n**INSTRUKSI PENGKODEAN (Wajib Patuhi):**\n\n1. JIKA terdeteksi **PERMINTAAN DATA**, kamu WAJIB mengawali responmu dengan kode:\n   \n   ###REQ_DATA###\n   \n   (Contoh respon: \"###REQ_DATA### Baik, saya akan mencarikan data laporan tersebut untuk Anda.\")\n\n2. JIKA terdeteksi **PERTANYAAN UMUM**, JAWABLAH LANGSUNG tanpa kode apa pun.\n   (Contoh respon: \"FRACAS adalah singkatan dari Failure Reporting, Analysis, and Corrective Action System.\")\n\n---\nJaga jawabanmu tetap profesional dan sopan. Jangan gunakan kode '###REQ_DATA###' jika pengguna hanya bertanya hal umum."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1632,
+        976
+      ],
+      "id": "a6755283-f444-4b6a-bcb9-c0b74cabdf6f",
+      "name": "General AI"
+    },
+    {
+      "parameters": {
+        "content": "## Phase 1.1 : Number Registration Node",
+        "height": 288,
+        "width": 1440,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        80,
+        544
+      ],
+      "typeVersion": 1,
+      "id": "77f8554d-b3dc-4a5c-b248-63c3d43d3e03",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "status-approve",
+                    "leftValue": "={{ $json.status }}",
+                    "rightValue": "APPROVE",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "APPROVE"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "status-waiting",
+                    "leftValue": "={{ $json.status }}",
+                    "rightValue": "WAITING",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "WAITING"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "status-not-approve",
+                    "leftValue": "={{ $json.status }}",
+                    "rightValue": "NOT APPROVE",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "NOT APPROVE"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        624,
+        608
+      ],
+      "id": "a7530fc8-56a7-4fce-a72e-15d867ce1076",
+      "name": "Check Status"
+    },
+    {
+      "parameters": {
+        "url": "=http://192.168.43.129:3001/api/{{ $json.session }}/lids/{{ encodeURIComponent($json.payload.from) }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wahaApi",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        400,
+        304
+      ],
+      "id": "c2e32fd6-aca4-46ff-af85-d6cbc70ba03a",
+      "name": "Mendapatkan lid & phone number user",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "vBXvfZ1zKOtCESlC",
+          "name": "Header Auth account"
+        },
+        "wahaApi": {
+          "id": "gKvk3gzaqlaZlIQJ",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\nfor (const item of items) {\n  if (item.json.pn) {\n    item.json.pn = item.json.pn.split('@')[0];\n  }\n}\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        624,
+        304
+      ],
+      "id": "bca7ac15-8f8a-4f67-959d-c42eaf9b4e6b",
+      "name": "Menghilangkan @c.us pada phone number"
+    },
+    {
+      "parameters": {
+        "url": "=https://docs.google.com/spreadsheets/d/1Vdg7EtGXyCG9w4ickdZ-f-sRWviFDY0urTLGW2e4yjs/gviz/tq",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "tq",
+              "value": "=select * where D = {{ $json.pn }}"
+            },
+            {
+              "name": "tqx",
+              "value": "=out:json"
+            },
+            {
+              "name": "gid",
+              "value": "=1633568675"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        848,
+        304
+      ],
+      "id": "6f033fdc-a054-4738-bf79-58b4e6a4a9b6",
+      "name": "Mencocokkan phone number ke spreadsheet",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const responseText = $input.first().json.data;\n\nif (!responseText) {\n    return [{ ditemukan: false }];\n}\n\nconst jsonStart = responseText.indexOf('{');\nconst jsonEnd = responseText.lastIndexOf('}') + 1;\nconst jsonString = responseText.substring(jsonStart, jsonEnd);\nconst data = JSON.parse(jsonString);\n\nif (!data.table.rows || data.table.rows.length === 0) {\n    return [{\n        ditemukan: false,\n        pesan: \"Nomor tidak terdaftar\"\n    }];\n}\n\nreturn data.table.rows.map(row => {\n  return {\n    nama: row.c[2]?.v || \"Tidak Ada Nama\",\n    nomor_telepon: row.c[3]?.v || \"\",\n    divisi: row.c[4]?.v || \"\",\n    status: row.c[6]?.v || \"\",\n    ditemukan: true\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1056,
+        304
+      ],
+      "id": "930d4273-b2fa-4efc-8be3-054e8ef1a62b",
+      "name": "Mengambil semua kolom jika phone number sesuai"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "60ea7cc9-2832-4701-bc7f-fff1fdf8e489",
+              "leftValue": "={{ $json.ditemukan }}",
+              "rightValue": {},
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1280,
+        304
+      ],
+      "id": "1cc15185-5529-4582-af5c-8a2f1afb3987",
+      "name": "IF ELSE"
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $('Edit Fields').first().json.session }}",
+        "chatId": "={{ $('Edit Fields').first().json.payload.from }}",
+        "text": "=Nomor Anda belum terdaftar. Silakan registrasi melalui link ini Dawg: https://docs.google.com/forms/d/e/1FAIpQLSdcWl423P2GFwXHHxIR6_slP0mSIbWCURaxGdq0_f5m5cZzYA/viewform?usp=dialog",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        336,
+        608
+      ],
+      "id": "702e8748-2e4f-457f-929e-3282b6b42226",
+      "name": "Mengirimkan Form Permohonan Akses",
+      "credentials": {
+        "wahaApi": {
+          "id": "gKvk3gzaqlaZlIQJ",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $('Edit Fields').first().json.session }}",
+        "chatId": "={{ $('Edit Fields').first().json.payload.from }}",
+        "text": "=Mohon tunggu, data Anda sedang divalidasi oleh Atmint (Status Anda saat ini: ⏳ WAITING).",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        912,
+        560
+      ],
+      "id": "3142f798-954d-42ed-81e1-a33f45a57f69",
+      "name": "Waiting Status Message",
+      "credentials": {
+        "wahaApi": {
+          "id": "gKvk3gzaqlaZlIQJ",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $('Edit Fields').first().json.session }}",
+        "chatId": "={{ $('Edit Fields').first().json.payload.from }}",
+        "text": "=❌ Anda tidak diijinkan menggunakan layanan ini. Silakan hubungi atmint untuk komplain atau minta serlok.",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        912,
+        688
+      ],
+      "id": "95a8b643-f23a-4e78-8aef-d9fadc831701",
+      "name": "Not Approve Message",
+      "credentials": {
+        "wahaApi": {
+          "id": "gKvk3gzaqlaZlIQJ",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Seen",
+        "session": "={{ $('WAHA Trigger').item.json.session }}",
+        "chatId": "={{ $('WAHA Trigger').item.json.payload.from }}",
+        "messageId": "={{ $('WAHA Trigger').item.json.payload.id }}",
+        "participant": "",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        336,
+        944
+      ],
+      "id": "cd5f1fe6-90ef-4317-983d-8d2e8442f739",
+      "name": "Membaca Pesan Pengirim",
+      "credentials": {
+        "wahaApi": {
+          "id": "gKvk3gzaqlaZlIQJ",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Start Typing",
+        "session": "={{ $('WAHA Trigger').first().json.session }}",
+        "chatId": "={{ $('WAHA Trigger').first().json.payload.from }}",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        544,
+        944
+      ],
+      "id": "0165f83d-f743-49f5-8c85-468a10a000cd",
+      "name": "Mulai mengetik",
+      "credentials": {
+        "wahaApi": {
+          "id": "gKvk3gzaqlaZlIQJ",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "limit": 50,
+        "queryString": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Search_Query', ``, 'string') }}",
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1GpYyHxgC7GU11V7Z4ZXz4IjtM_YcLVxF",
+            "mode": "list",
+            "cachedResultName": "Untitled folder",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1GpYyHxgC7GU11V7Z4ZXz4IjtM_YcLVxF"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTool",
+      "typeVersion": 3,
+      "position": [
+        976,
+        1136
+      ],
+      "id": "ae735ce8-1d02-421e-975f-9fe78dc60a5f",
+      "name": "Search File in GDrive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "pgkyd6wFdgLjqzYm",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2832,
+        560
+      ],
+      "id": "c6a4718f-9593-4dec-bdb3-6255acbf365c",
+      "name": "Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "4mpvn15qtFG1iJXZ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1696,
+        656
+      ],
+      "id": "2e5b1f2d-a890-4e1e-a8bc-fa1f48e30b86",
+      "name": "Gemini1",
+      "retryOnFail": false,
+      "maxTries": 2,
+      "waitBetweenTries": 2000,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "4mpvn15qtFG1iJXZ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Stop Typing",
+        "session": "={{ $('Edit Fields').first().json.session }}",
+        "chatId": "={{ $('Edit Fields').first().json.payload.from }}",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        2400,
+        512
+      ],
+      "id": "2d844b93-08ef-43fd-940f-815e258650f3",
+      "name": "Berhenti mengetik2",
+      "credentials": {
+        "wahaApi": {
+          "id": "gKvk3gzaqlaZlIQJ",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.output.replace('###REQ_DATA###', '').trim() }}",
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "Kamu adalah Query Generator untuk Google Visualization API. Tugasmu HANYA mengubah pertanyaan user menjadi string query (tq).\n\nATURAN OUTPUT (WAJIB)\n\n- Jangan pernah menampilkan proses berpikir, reasoning, chain of thought, atau analisis internal.\n- Jangan pernah menghasilkan tag <think>, </think>, ataupun konten di dalamnya.\n- Berikan hanya jawaban akhir yang akan dibaca pengguna.\n- Jika melakukan penalaran, lakukan secara internal dan jangan ditampilkan.\n\nPETA KOLOM FRACAS (Wajib dipatuhi):\n- Kolom C = Kode (KRL_KCI TNC-1 sampai data paling Bawah, nomor urut)\n- Kolom D = Tgl Kejadian (format date (dd/mm/yyyy ) (Bisa menggunakan 01/01/2025 atau 1 January 2025 atau January 2025)\n- Kolom E = Waktu Kejadian (Format jam menggunakan 00.00 - 23.59)\n- Kolom H = TS (Trainset) contains '...'\n- Kolom I = Tipe/ car\n- Kolom J = No. KA (Kereta atau kereta)\n- Kolom K = Jenis Car (Gunakan: contains contoh => 'TC1 atau Tc1 atau tc1')\n- Kolom L = No Car (Gunakan: contains '...')\n- Kolom M = Identitas Sarana\n- Kolom N = Temuan/Symptom (Gejala kerusakan) (Abaikan case sensitive dan contains: '...')\n- Kolom O = Detail Waktu Temuan (Abaikan case sensitive dan Gunakan: contains '...')\n- Kolom P = Remarks (Gunakan: contains '...')\n- Kolom Q = Identitas\n- Kolom S = Klasifikasi Gangguan (Abaikan case sensitive, dan gunakan contains '...')\n- Kolom T = 6 System (Abaikan case sensitive dan gunakan contains '...')\n- Kolom U = Klasifikasi System (L1) (Gunakan: contains '...') bisa menggunakan (LRU 1, Lru 1, lru 1, LRU1, Lru1, lru1)\n- Kolom V = Klasifikasi Subsystem (L2) (Gunakan: contains '...') bisa menggunakan (LRU 2, Lru 2, lru 2, LRU2, Lru2, lru2)\n- Kolom W = Klasifikasi Komponen (L3) (Gunakan: contains '...') bisa menggunakan (LRU 3, Lru 3, lru 3, LRU3, Lru3, lru3)\n- Kolom X = Kode LRU (Abaikan case sensitive, dan gunakan contains '...')\n- Kolom Y = Komponen Rusak (TS) (Gunakan: contains '...') abaikan case sensitive\n- Kolom Z = Komponen Terganggu (L5)\n- Kolom AA = Total Jumlah Gangguan\n- Kolom AB = Potensi Gangguan' (Abaikan case sensitive danGunakan: contains '...')\n- Kolom AC = Akibat Gangguan (Gunakan Contains atau kata katanya hampir mirip dengan data asli)\n- Kolom AD = Klasifikasi Penyebab (Abaikan case sensitive dan gunakan contains '...')\n- Kolom AE = Level Gangguan (Abaikan case sensitive dan gunakan contains '...'Abaikan )\n- Kolom AF = Nilai Odometer\n- Kolom AL = PELAPOR (Gunakan Contains '...')\n- Kolom AM = Tanggal Mulai Tindak Lanjut (date dd/mm/yyyy)\n- Kolom AN = Waktu Mulai tindak lanjut (Format 00.00 - 23.59)\n- Kolom AQ = Penyebab (Gunakan Contains atau kata katanya hampir mirip dengan data asli)\n- Kolom AR = Klasifikasi Akar Masalah (Gunakan Contains atau kata katanya hampir mirip dengan data asli)\n- Kolom AS = Akar Masalah (jangan gunakan contains, tapi menggunakan LIKE 'a%' atau '%a%' atau '%a', Contoh: akar masalah yang berkaitan dengan pintu = where AP like '%pintu%')\n- Kolom AT = Rekomendasi (Gunakan Contains atau kata katanya hampir mirip dengan data asli)\n- Kolom AU = Jenis solusi / penanganan (Gunakan Contains atau kata katanya hampir mirip dengan data asli)\n- Kolom AV = Solusi / Penanganan  \n- Kolom AW = Status Gangguan (Nilai: 'OPEN/Open/open', 'CLOSE/Close/close' dan 'PANTAUAN/Pantauan/pantauan')\n- Kolom AX = Tanggal Selesai Tindak Lanjut (Bisa menggunakan 01/01/2025, 1 Januari 2025)\n- Kolom AY = Waktu  Selesai Tindak Lanjut (Format: 00.00 - 23.59) \n- Kolom BE = Tanggal Delivery (Bisa menggunakan 01/01/2025, 1 Januari 2025)\n\nATURAN PENTING:\n1. Gabungkan kondisi dengan \"AND\".\n2. Gunakan \"limit 200\" di akhir query.\n3. Output HANYA string query. JANGAN ada penjelasan lain.\n4. Jika user bertanya 'kerusakan tanggal 27 Nov 2023', output kamu: select * where D = date '2023-11-27' limit 200\n5. Jika user mengatakan \"Jam 5 sore, 6 pagi, 10 malam\" ubah menjadi format 24 jam, jam 5 sore menjadi 17.00, 6 pagi menjadi 06.00 dan 10 malam menjadi 22.00 dan seterusnya.\n6. Jika user meminta \"berapa jumlah keseluruhan data\" maka gunakan COUNT, atau hitung jumlah baris di kolom B.\n7.  Selalu menggunakan kolom Y apabila user menanyakan \"gangguan\" contohnya \"tampilkan kereta K1125037 gangguan Bracket flexible hose\"\n8.  Apabila terdapat permintaan dengan format berupa K1125037 maka ubahlah menjadi format K1 1 25 037 atau terdapat permintaan K112537 (tanpa 0 di angka terakhir) maka tetap gunakan  K1 1 25 037 dan selalu gunakan Kolom J untuk 'kereta'\n9. Apabila user mengatakan Trainset maka gunakan Kolom H, untuk penulisan Bisa menggunakan 'Trainset 7' 'Trainset 07' 'trainset7' Outputnya menggunakan 'TS 07' "
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1648,
+        416
+      ],
+      "id": "035533c3-de92-44c6-870f-9bace4f96b17",
+      "name": "Req Data AI2",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Edit Fields').first().json.payload.body }}",
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "=Kamu adalah Asisten Pelaporan FRACAS PT INKA. Tugasmu menyajikan data laporan kerusakan dengan format KARTU VERTIKAL yang sangat ketat.\n\nDATA SUMBER:\n{{ JSON.stringify($json.data) }}\n\nATURAN FORMATTING (STRICT MODE):\n1. KONSISTENSI VISUAL: Jangan pernah menggabungkan atribut dalam satu baris. Setiap atribut (Waktu, Unit, Masalah) WAJIB dipisahkan dengan BARIS BARU (Enter).\n2. HEADER: Judul laporan (Nomor Laporan) harus ditebalkan (Bold).\n3. HANDLING DATA KOSONG: Jika data input kosong atau \"[]\", jawab: \"Mohon maaf, tidak ditemukan laporan dengan kriteria tersebut.\"\n\nTEMPLATE JAWABAN (Copy-Paste struktur ini persis):\n\nKami menemukan total ada [Jumlah_Output] Laporan, Berikut detail laporan yang ditemukan:\n\n*Data ke [Nomor Urut]. Laporan Kerusakan #[No = Kolom B]* :\n\n- Nomor KA: [No. KA]\n- Pelapor: [Pelapor]\n- Tanggal: [Tgl Kejadian] \n- Pukul: [Waktu Kejadian]\n- Unit: [Tipe/ car] \n- Kode LRU: [Kode LRU]\n- Temuan: [Temuan/Symptom]\n- Akar Masalah: [Akar Masalah]\n- Detail Waktu Temuan: [Detail Waktu Temuan]\n- Permasalahan: [Detail Deskripsi Permasalahan / Kegiatan]\n- Level Gangguan: [Level Gangguan]\n- Komponen Rusak: [Komponen Rusak (TS)]\n- Jenis Penanganan: [Jenis solusi / penanganan]\n- Solusi: [Solusi / Penanganan]\n- Status: [Status Gangguan]\n- Tanggal Selesai TDL: [Tanggal Selesai Tindak Lanjut]\n\n*Data ke [Nomor Urut]. Laporan Kerusakan #[No = Kolom B]* :\n\n... (Ulangi format di atas)\n\nKondisi Khusus:\nJika data tidak ditemukan atau kosong, berikan respon: \"Mohon maaf, tidak ditemukan laporan dengan kriteria tersebut.\" dan jika data berhasil ditemukan tetapi salah satu kolomnya tidak ada data, berikan respon ( - ) pada kolom tersebut. \n\nJANGAN PERNAH menampilkan query SQL kepada pengguna. Jika data sumber (JSON) kosong, katakan dengan sopan bahwa data untuk tanggal/kriteria tersebut tidak ditemukan."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        2896,
+        320
+      ],
+      "id": "e222b910-2cea-4489-94bd-58853cf78eb8",
+      "name": "Answer AI2",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "url": "=https://docs.google.com/spreadsheets/d/1lnTnk4es93A5vS-eQ9KbQ67ghghvIfGGzvvpb5SJ4DI/gviz/tq",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "tq",
+              "value": "={{ $('Req Data AI2').item.json.output }}"
+            },
+            {
+              "name": "tqx",
+              "value": "=out:json"
+            },
+            {
+              "name": "gid",
+              "value": "=0"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2400,
+        320
+      ],
+      "id": "d10f8445-4ecc-4dcd-a1a4-4d8b6f923160",
+      "name": "Mengabil data dari Spreadsheet2"
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Stop Typing",
+        "session": "={{ $('Edit Fields').first().json.session }}",
+        "chatId": "={{ $('Edit Fields').first().json.payload.from }}",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        3232,
+        256
+      ],
+      "id": "60f4fea1-94e7-4a4a-b1f6-29fd0f242337",
+      "name": "Berhenti mengetik3",
+      "credentials": {
+        "wahaApi": {
+          "id": "gKvk3gzaqlaZlIQJ",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 3
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3408,
+        256
+      ],
+      "id": "c98b4788-ad37-42ff-b86b-6938e7ff557a",
+      "name": "Wait4",
+      "webhookId": "f71fe88c-d8ce-44e8-b08f-2273450f5e38"
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $('Edit Fields').first().json.session }}",
+        "chatId": "={{ $('Edit Fields').first().json.payload.from }}",
+        "text": "={{ $('Answer AI2').item.json.output }}",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        3568,
+        256
+      ],
+      "id": "b8a87f03-c9f1-4bef-abfd-49ea9b69bedf",
+      "name": "Mengirimkan pesan dari AI2",
+      "credentials": {
+        "wahaApi": {
+          "id": "gKvk3gzaqlaZlIQJ",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $('Edit Fields').first().json.session }}",
+        "chatId": "={{ $('Edit Fields').first().json.payload.from }}",
+        "text": "=Mohon maaf, sepertinya data yang dimuat terlalu besar atau server sedang sibuk. Mungkin bisa mencoba pertanyaan yang lebih spesifik?",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        2592,
+        512
+      ],
+      "id": "a5d673f4-4b40-4e63-9bfa-2068f5d94c07",
+      "name": "Send a text message6",
+      "credentials": {
+        "wahaApi": {
+          "id": "gKvk3gzaqlaZlIQJ",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $('Edit Fields').first().json.session }}",
+        "chatId": "={{ $('Edit Fields').first().json.payload.from }}",
+        "text": "=Terjadi gangguan saat menyusun laporan, silakan coba lagi.",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        3408,
+        416
+      ],
+      "id": "898b2cf0-2b2f-4f51-b16a-ff0d25b8bbe2",
+      "name": "Send a text message7",
+      "credentials": {
+        "wahaApi": {
+          "id": "gKvk3gzaqlaZlIQJ",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Stop Typing",
+        "session": "={{ $('Edit Fields').first().json.session }}",
+        "chatId": "={{ $('Edit Fields').first().json.payload.from }}",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        3232,
+        416
+      ],
+      "id": "d7753d72-ef93-47f2-817c-ad009cdb9a02",
+      "name": "Berhenti mengetik4",
+      "credentials": {
+        "wahaApi": {
+          "id": "gKvk3gzaqlaZlIQJ",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2192,
+        512
+      ],
+      "id": "cd1da9e1-bcb5-4ed9-8d18-fbefcbc2b8cb",
+      "name": "Wait5",
+      "webhookId": "f71fe88c-d8ce-44e8-b08f-2273450f5e38"
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $('Edit Fields').first().json.session }}",
+        "chatId": "={{ $('Edit Fields').first().json.payload.from }}",
+        "text": "Baik, Mohon tunggu sebentar, kami sedang menyusun informasinya...",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        2192,
+        320
+      ],
+      "id": "52841512-c613-40e5-baea-e106d82afb8b",
+      "name": "Send a text message8",
+      "credentials": {
+        "wahaApi": {
+          "id": "gKvk3gzaqlaZlIQJ",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Penting !!\nUntuk Workflow File Mode bersifat opsional karena Fungsi Utama keseluruhan Workflow adalah \"*Gathering Information Report from FRACAS*\" sementara *FILE MODE* digunakan untuk memberikan file atau link dokumen dari Google Drive. Tetapi Jika tetap ingin menggunakan, akan ada beberapa Konfigurasi diantaranya :\n\n1. Pada Node \"*Klasifikasi AI*\" berikan Prompt baru di System Message-nya berupa :\n   \"JIKA user meminta file fisik/dokumen (PDF, Manual, Foto) atau link di Google Drive:\n   Output: ###FILE_MODE### [Kata kunci pencarian file]\"\n2. Pada Node \"*Route Path*\" Tambahkan Route baru dengan nama \"###FILE_MODE###\" dan hubungkan ke Search Files Google Drive di Workflow File Mode",
+        "height": 400,
+        "width": 880,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        640,
+        -208
+      ],
+      "typeVersion": 1,
+      "id": "c96a9f28-6622-48ae-adae-c2e92df9129f",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        2656,
+        320
+      ],
+      "id": "15bed2c2-e323-44ba-8e65-55327b95c629",
+      "name": "Menggabungkan data menjadi 1 Array2"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1hbcbuFhVpCXkuikAo6Awfkee6sh_uboQsojDcrc672c",
+          "mode": "list",
+          "cachedResultName": "Prosedur-Mutu",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hbcbuFhVpCXkuikAo6Awfkee6sh_uboQsojDcrc672c/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hbcbuFhVpCXkuikAo6Awfkee6sh_uboQsojDcrc672c/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        2016,
+        1808
+      ],
+      "id": "44d5ab3f-13df-4f90-89a2-90c48758f513",
+      "name": "Get Document Metadata",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "nsKY6pRCMdmXZmAH",
+          "name": "Testing UGECE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $('Edit Fields').first().json.session }}",
+        "chatId": "={{ $('Edit Fields').first().json.payload.from }}",
+        "text": "={{ $('Docs AI').item.json.output }}",
+        "requestOptions": {}
+      },
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        1968,
+        1584
+      ],
+      "id": "e43885f3-02ab-4525-8995-91a33fc23d2a",
+      "name": "Send Response",
+      "credentials": {
+        "wahaApi": {
+          "id": "gKvk3gzaqlaZlIQJ",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.output }}",
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "# IDENTITAS\nKamu adalah **Asisten Dokumentasi Internal** yang cerdas dan membantu. Tugasmu menjawab pertanyaan tentang dokumen perusahaan dengan akurat berdasarkan database.\n\n# CARA KERJA\n1. **Untuk pertanyaan tentang ISI/KONTEN dokumen**: \n   - WAJIB gunakan tool `Supabase Vector Store` terlebih dahulu\n   - Tool ini berisi teks lengkap dari semua PDF yang sudah di-scan\n   - Cari tujuan, ruang lingkup, maksud, dokumen terkait, alur proses, dan karakteristik proses dari dokumen yang ditanyakan user di supabase. Pertanyaan tentang isi dokumen tidak akan jauh dari tujuan, ruang lingkup, maksud, dokumen terkait, alur proses, dan karakteristik proses, kamu harus menemukan informasi itu.\n\n2. **Untuk informasi METADATA dokumen**:\n   - Gunakan tool `Get Document Metadata` (Google Sheets)\n   - Dapatkan: Link PDF, Penanggung Jawab, Pendukung, Kode Dokumen\n- Gunakan sheet jika isi dokumen yang ditanyakan user tidak ada jawabannya di supabase.\n\n3. **Kombinasi Optimal** (RECOMMENDED):\n   - Langkah 1: Cari jawaban di Vector Store\n   - Langkah 2: Ambil metadata dari Sheets untuk melengkapi info\n   - Langkah 3: Gabungkan menjadi jawaban komprehensif\n\n# ATURAN MENJAWAB\n✅ **WAJIB**:\n- Jawab dalam Bahasa Indonesia profesional tapi tetap ramah\n- SELALU sebutkan sumber: \"Berdasarkan **[Nama Dokumen]** (Kode: [Kode])...\"\n- Sertakan Link PDF asli dari Google Sheets di akhir jawaban\n- Jika ada PIC/Pendukung, sebutkan untuk info lebih lanjut\n\n❌ **DILARANG**:\n- Mengarang informasi yang tidak ada di database (ANTI-HALLUCINATION)\n- Memberikan jawaban tanpa mengecek tool terlebih dahulu\n- Mengabaikan metadata penting seperti link dokumen\n\n# FORMAT JAWABAN IDEAL\n```\n[Emoji] **Jawaban Singkat**\n\n[Penjelasan detail dari Vector Store dengan bullet points jika perlu]\n\n📄 **Info Dokumen:**\n- Nama: [Nama Dokumen]\n- Kode: [Kode]\n- Penanggung Jawab: [Penanggung Jawab]\n- Pendukung: [Pendukung]\n\n🔗 **Link PDF**: [Link dari Sheets]\n\n💡 Butuh info lebih lanjut? Hubungi [PIC] ya!\n```\n\n# HANDLING KHUSUS\n- **Jika memang informasi benar-benar tidak ditemukan di Vector Store**: \"Maaf, informasi spesifik tentang [topik] tidak ditemukan. Namun ada dokumen terkait: [list dengan link]\". Tapi pastikan dan cari dulu sampai ketemu.\n- **Jika user tanya dokumen yang tidak ada**: Jujur katakan tidak ada, tawarkan dokumen serupa\n- **Jika pertanyaan ambigu**: Minta klarifikasi dengan sopan sambil tawarkan topik terkait\n- ** Jika user minta dokumen terkait divisi tertentu, kasih tau jumlahnya dulu di bagian header, baru list dokumen-dokumen yang terkait dengan divisi tersebut. Cari dokumen terkait divisi itu dari kolom PENANGGUNG JAWAB DAN PENDUKUNG SAJA, JANGAN CEK KOLOM LAIN, kemudian beri tahu semua dokumen terkaitnya dengan numbering.\n\n# TIPS PENCARIAN\n- Gunakan keyword yang relevan saat query Vector Store\n- Jika hasil pertama kurang memuaskan, coba keyword alternatif\n- Untuk pertanyaan umum (\"ada apa aja?\"), list semua dokumen dari Sheets dengan kategori"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1616,
+        1584
+      ],
+      "id": "cfa615dc-b9e7-464b-8de2-addef9518768",
+      "name": "Docs AI"
+    },
+    {
+      "parameters": {
+        "content": "## Phase 3 : (Document Mode) This route use for giving users a information about Document ",
+        "height": 528,
+        "width": 2400,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1552,
+        1456
+      ],
+      "typeVersion": 1,
+      "id": "48180b34-1795-44dd-be01-3f7128ba2ab2",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "Google Gemini\nAPI KEY 1: [MASUKKAN_API_KEY_ANDA_DISINI]\nAPI KEY 2: [MASUKKAN_API_KEY_ANDA_DISINI]\nAPI KEY 3: [MASUKKAN_API_KEY_ANDA_DISINI]\n\n",
+        "width": 512
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        304,
+        1280
+      ],
+      "typeVersion": 1,
+      "id": "00c590fd-fa1d-42d5-8f69-eb50305a7f10",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "{{ $('Klasifikasi AI').item.json.output }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        1808,
+        656
+      ],
+      "id": "1fd5c5b4-bb3e-4fbf-a94c-942119038b9e",
+      "name": "Postgres Chat Memory1",
+      "credentials": {
+        "postgres": {
+          "id": "ljvyczIPruTgVqEj",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-20b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        1584,
+        656
+      ],
+      "id": "ffa726c8-7a6c-4b14-8ade-d5600b017472",
+      "name": "Groq Chat Model2",
+      "credentials": {
+        "groqApi": {
+          "id": "6AlItLt5aJvHh8zf",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "{{ $('Answer AI2').item.json.output }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        3088,
+        560
+      ],
+      "id": "b08e9d60-b3a1-4e9c-adc3-0727ce745319",
+      "name": "Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "ljvyczIPruTgVqEj",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-20b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        2960,
+        560
+      ],
+      "id": "acae99c3-c6a6-48a9-9d6c-4087d2260baa",
+      "name": "Groq - GPT OSS",
+      "credentials": {
+        "groqApi": {
+          "id": "6AlItLt5aJvHh8zf",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1632,
+        1200
+      ],
+      "id": "5d6b77b3-225a-45d9-89b1-7836aaba49d5",
+      "name": "Gemini2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "4mpvn15qtFG1iJXZ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-20b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        1200
+      ],
+      "id": "b2f84a32-c5f6-46f6-8894-c1bbcd101540",
+      "name": "Groq - GPT OSS1",
+      "credentials": {
+        "groqApi": {
+          "id": "6AlItLt5aJvHh8zf",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "{{ $('General AI').item.json.output }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        1904,
+        1200
+      ],
+      "id": "984c71ee-288f-4e95-b955-db9b9a0ef562",
+      "name": "Chat Memory1",
+      "credentials": {
+        "postgres": {
+          "id": "ljvyczIPruTgVqEj",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-20b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        1744,
+        1808
+      ],
+      "id": "27cf64e7-1049-49c0-8456-92799bad254c",
+      "name": "Groq - GPT OSS2",
+      "credentials": {
+        "groqApi": {
+          "id": "6AlItLt5aJvHh8zf",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "temperature": 0.3
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1616,
+        1808
+      ],
+      "id": "a9823a0d-4979-4563-b6eb-f888169e943e",
+      "name": "Gemini3",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "FeazwZFfOZGdSeh3",
+          "name": "Testing UGECE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "{{ $('Docs AI').item.json.output }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        1888,
+        1808
+      ],
+      "id": "fc5a827c-d66b-4c7d-9a30-b37763f62fc0",
+      "name": "Chat Memory2",
+      "credentials": {
+        "postgres": {
+          "id": "ljvyczIPruTgVqEj",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-20b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        688,
+        1136
+      ],
+      "id": "042fdd5d-135a-4152-81eb-e5f70711bf58",
+      "name": "Groq - GPT OSS3",
+      "credentials": {
+        "groqApi": {
+          "id": "6AlItLt5aJvHh8zf",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        832,
+        1136
+      ],
+      "id": "7d43a7c8-c7bd-4d18-b925-340f3a95dcc2",
+      "name": "Gemini4",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "4mpvn15qtFG1iJXZ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "WAHA Trigger": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Send a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stop Typing": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stop Typing2": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search files and folders": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Mendapatkan lid & phone number user",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Stop Typing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a text message5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a text message4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message5": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Path": {
+      "main": [
+        [
+          {
+            "node": "Req Data AI2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "General AI",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Docs AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Klasifikasi AI": {
+      "main": [
+        [
+          {
+            "node": "Route Path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "General AI": {
+      "main": [
+        [
+          {
+            "node": "Stop Typing2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Status": {
+      "main": [
+        [
+          {
+            "node": "Membaca Pesan Pengirim",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Waiting Status Message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Not Approve Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mendapatkan lid & phone number user": {
+      "main": [
+        [
+          {
+            "node": "Menghilangkan @c.us pada phone number",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Menghilangkan @c.us pada phone number": {
+      "main": [
+        [
+          {
+            "node": "Mencocokkan phone number ke spreadsheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mencocokkan phone number ke spreadsheet": {
+      "main": [
+        [
+          {
+            "node": "Mengambil semua kolom jika phone number sesuai",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mengambil semua kolom jika phone number sesuai": {
+      "main": [
+        [
+          {
+            "node": "IF ELSE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF ELSE": {
+      "main": [
+        [
+          {
+            "node": "Check Status",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mengirimkan Form Permohonan Akses",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Membaca Pesan Pengirim": {
+      "main": [
+        [
+          {
+            "node": "Mulai mengetik",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mulai mengetik": {
+      "main": [
+        [
+          {
+            "node": "Klasifikasi AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search File in GDrive": {
+      "ai_tool": [
+        [
+          {
+            "node": "Klasifikasi AI",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Answer AI2",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Gemini1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Req Data AI2",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Berhenti mengetik2": {
+      "main": [
+        [
+          {
+            "node": "Send a text message6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Req Data AI2": {
+      "main": [
+        [
+          {
+            "node": "Send a text message8",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Answer AI2": {
+      "main": [
+        [
+          {
+            "node": "Berhenti mengetik3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Berhenti mengetik4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mengabil data dari Spreadsheet2": {
+      "main": [
+        [
+          {
+            "node": "Menggabungkan data menjadi 1 Array2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Berhenti mengetik3": {
+      "main": [
+        [
+          {
+            "node": "Wait4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait4": {
+      "main": [
+        [
+          {
+            "node": "Mengirimkan pesan dari AI2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Berhenti mengetik4": {
+      "main": [
+        [
+          {
+            "node": "Send a text message7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait5": {
+      "main": [
+        [
+          {
+            "node": "Berhenti mengetik2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message8": {
+      "main": [
+        [
+          {
+            "node": "Mengabil data dari Spreadsheet2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Menggabungkan data menjadi 1 Array2": {
+      "main": [
+        [
+          {
+            "node": "Answer AI2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Document Metadata": {
+      "ai_tool": [
+        [
+          {
+            "node": "Docs AI",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Docs AI": {
+      "main": [
+        [
+          {
+            "node": "Send Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory1": {
+      "ai_memory": [
+        []
+      ]
+    },
+    "Groq Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Req Data AI2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Answer AI2",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq - GPT OSS": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Answer AI2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "General AI",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Groq - GPT OSS1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "General AI",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "General AI",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq - GPT OSS2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Docs AI",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Docs AI",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Chat Memory2": {
+      "ai_memory": [
+        [
+          {
+            "node": "Docs AI",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq - GPT OSS3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Klasifikasi AI",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Klasifikasi AI",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "0abd0095-caf9-4ea6-983b-7dda5c9afb0f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d894b5f926998ec65c5eaf9ef6502000fe1b9c158377e9b130e63b1b7c88ca2c"
+  },
+  "id": "QFOG8aw3hH7-OrIv-pDi2",
+  "tags": []
+}
