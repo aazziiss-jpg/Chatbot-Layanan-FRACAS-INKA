@@ -84,7 +84,7 @@ Berikut adalah panduan penggunaan chatbot berdasarkan alur yang telah dikonfigur
 ### 1. Tahap Registrasi
 Jika pengguna baru mengirim pesan dan nomornya belum terdaftar di database (Google Sheets), sistem akan otomatis mengirimkan form pendaftaran.
 <br>
-![Register](Documentation/1.%20Register.jpg)
+![Register](Documentation/1.%20Register.png)
 
 ### 2. Status Validasi (Waiting)
 Setelah mengisi form, status pengguna di database menjadi *WAITING*. Jika pengguna mencoba mengakses chatbot, sistem akan memberitahu bahwa data sedang dalam tahap validasi oleh admin.
